@@ -1,0 +1,16 @@
+node_modules/
+.review/
+.claude/
+
+# UI build output (rebuild with: cd help-me-review/ui && bun run build)
+# help-me-review/ui/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Lockfiles
+bun.lock
