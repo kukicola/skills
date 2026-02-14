@@ -11,9 +11,13 @@ A Skill that organizes large code diffs into small, logically grouped sections w
 3. Assembles the grouped sections into a structured JSON, validates 100% line coverage
 4. Generates a self-contained HTML review page with split-view diffs (powered by [@pierre/diffs](https://diffs.com)), model annotations, and interactive user commenting
 
-## Setup
+## Installation
 
-Repo contains already prebuild UI bundle. So there is no need to build it manually.
+```bash
+npx skills add kukicola/skills/help-me-review
+```
+
+The repo contains a prebuilt UI bundle — no build step required.
 
 ## Usage
 
