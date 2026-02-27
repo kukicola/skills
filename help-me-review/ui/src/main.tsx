@@ -4,10 +4,24 @@ import { App } from './App';
 import './index.css';
 import type { ReviewData } from './types';
 
-const DATA: ReviewData | null = (window as any).__REVIEW_DATA__ ?? null;
+const root = createRoot(document.getElementById('root')!);
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App data={DATA} />
-  </StrictMode>
-);
+fetch('./sections.json')
+  .then((res) => {
+    if (!res.ok) throw new Error(`Failed to load sections.json: ${res.status}`);
+    return res.json() as Promise<ReviewData>;
+  })
+  .then((data) => {
+    root.render(
+      <StrictMode>
+        <App data={data} />
+      </StrictMode>
+    );
+  })
+  .catch(() => {
+    root.render(
+      <StrictMode>
+        <App data={null} />
+      </StrictMode>
+    );
+  });

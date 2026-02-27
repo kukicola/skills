@@ -117,7 +117,7 @@ Keep to 1-2 sentences per comment. Not every line needs a comment — only annot
 
 Every block number must appear exactly once across all sections. The assembler will error if any blocks are missing or duplicated.
 
-### 5. Assemble, validate, and generate
+### 5. Assemble, validate, and serve
 
 ```bash
 # Build sections JSON from manifest + blocks
@@ -126,16 +126,20 @@ node <skill_path>/scripts/assemble_sections.mjs "$REVIEW_DIR/manifest.json" "$RE
 # Validate all changed lines are covered
 node <skill_path>/scripts/validate_coverage.mjs "$REVIEW_DIR/raw.diff" "$REVIEW_DIR/sections.json"
 
-# Generate HTML review page
-node <skill_path>/scripts/generate_review.mjs "$REVIEW_DIR/sections.json" "$REVIEW_DIR/review.html"
+# Copy the review UI into the working directory
+cp <skill_path>/ui/dist/index.html "$REVIEW_DIR/index.html"
 ```
 
 If the assembler errors on missing blocks, fix `$REVIEW_DIR/manifest.json` and re-run. Do not proceed until all blocks are covered.
 
-Open in the user's browser:
+Serve the review directory and open in the user's browser:
 ```bash
-open "$REVIEW_DIR/review.html"        # macOS
-xdg-open "$REVIEW_DIR/review.html"    # Linux
+# Start a local server (runs in background)
+npx -y serve "$REVIEW_DIR" -l 3847 &
+
+# Open in browser
+open "http://localhost:3847"          # macOS
+xdg-open "http://localhost:3847"      # Linux
 ```
 
 Tell the user: the review page is open. They can click any line to add comments, then export comments (JSON or text) via the buttons at the top.
